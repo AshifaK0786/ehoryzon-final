@@ -1,0 +1,498 @@
+import thiraiImg from "../assets/thirai trivia.png";
+import masterchefImg from "../assets/masterchef mania.png";
+import webifyImg from "../assets/webify.png";
+import electricalImg from "../assets/electrical odyssey.png";
+import iplImg from "../assets/ipl auction.png";
+import mecharenaImg from "../assets/mech arena.png";
+import gameathonImg from "../assets/gameathon.png";
+import buildscapeImg from "../assets/buildscape.png";
+import stocksSharesImg from "../assets/stock and shares.png";
+import bplanImg from "../assets/b-plan.png";
+import productMarketFitImg from "../assets/workshop-product market fit.png";
+import businessMarketFitImg from "../assets/workshop-business market fit.png";
+import financeImg from "../assets/workshop-finance.png";
+import iprImg from "../assets/workshop ipr & ip management.png";
+import startupLegalEthicalImg from "../assets/workshop startup,ethical.png";
+import detxImg from "../assets/DetxForum.png";
+import udayamiImg from "../assets/udayami bazaar.jpeg";
+
+
+export type FeeType = "per_head" | "per_team";
+
+export type EventItem = {
+  slug: string;
+  title: string;
+  date: string | null;
+  image: any;
+  registerUrl: string;
+
+  upiid: string;
+  maxTeamMembers: number;
+  category: string;
+
+  // ✅ added for dynamic QR
+  feeType: FeeType;     // "per_head" or "per_team"
+  feeAmount: number;    // base amount (100, 200, 300, etc)
+
+  descriptionLines: string[];
+  guidelinesFile?: string;
+
+  contactLeft?: string;
+  contactRight?: string;
+  contactLeftName?: string;
+  contactRightName?: string;
+  whatsappLink?: string;
+  isClosed?: boolean;
+};
+
+// ✅ INTRA COLLEGE EVENTS
+export const intraeventList: EventItem[] = [
+  {
+    slug: "mecharena",
+    title: "Mech Arena",
+    date: "Feb 19",
+    image: mecharenaImg,
+    registerUrl: "/register/mecharena",
+    upiid: "rithesh07.06@okhdfcbank",
+    maxTeamMembers: 5,
+    category: "intra",
+
+    // ✅ payment rule (edit if needed)
+    feeType: "per_head",
+    feeAmount: 200,
+
+    descriptionLines: [
+      "Design Conclave - Competitive, hands-on CAD modeling event testing speed, creativity, technical accuracy, and practical design thinking.",
+      "Progress through rapid concept modeling to detailed design planning and real-world fabrication simulating industry-style product development.",
+      "Work under time constraints and problem-based challenges converting ideas into functional designs using CAD tools.",
+      "Physical fabrication techniques demonstrate engineering excellence and practical problem-solving abilities.",
+    ],
+    guidelinesFile: "MECHARENA.pdf",
+    contactLeft: "+916381695612",
+    contactRight: "+919750134721",
+    contactLeftName: "RITHESH V K",
+    contactRightName: "HARIRAM R",
+    whatsappLink: "https://chat.whatsapp.com/DJ4WiRjfv9bIirxC4Ek7gU",
+  },
+  {
+    slug: "electrical-odyssey",
+    title: "Electrical Odyssey",
+    date: "Feb 20",
+    image: electricalImg,
+    registerUrl: "/register/electrical-odyssey",
+    upiid: "rishikeshwaranmsr3106@oksbi",
+    maxTeamMembers: 3,
+    category: "intra",
+
+    feeType: "per_head",
+    feeAmount: 200,
+
+    descriptionLines: [
+      "Two-day technical innovation challenge solving real-world electrical engineering problems.",
+      "Compete through MCQ assessments, circuit design, simulation, and final hardware-based hackathon rounds.",
+      "Encourages innovation, technical excellence, and practical problem-solving under expert evaluation.",
+      "Push your limits and showcase electrical engineering mastery across multiple competitive formats.",
+    ],
+    guidelinesFile: "Electrical_Odyssey.pdf",
+    contactLeft: "+919715708810",
+    contactRight: "+918072257729",
+    contactLeftName: "RISHIKESHWARAN M",
+    contactRightName: "SWARANTHI A S",
+    whatsappLink: "https://chat.whatsapp.com/I5QaoN8wGzWEGuC4MEwvEa",
+  },
+  {
+    slug: "gameathon",
+    title: "Game-a-thon",
+    date: "Feb 20",
+    image: gameathonImg,
+    registerUrl: "/register/gameathon",
+    upiid: "pavim2831@okicici",
+    maxTeamMembers: 3,
+    category: "intra",
+
+    feeType: "per_head",
+    feeAmount: 200,
+
+    descriptionLines: [
+      "Rapid game development sprint with theme constraints.",
+      "Prototype gameplay mechanics and polish a short demo.",
+      "Teams present their playable builds to judges.",
+    ],
+    guidelinesFile: "GAMEATHON.pdf",
+    contactLeft: "+916380154463",
+    contactRight: "+918248286007",
+    contactLeftName: "HARINI M",
+    contactRightName: "JAIYANTH A S",
+    whatsappLink: "https://chat.whatsapp.com/Lut6MBJKZnjBJBigKonb4R",
+  },
+  {
+    slug: "webify",
+    title: "Webify",
+    date: "Feb 19",
+    image: webifyImg,
+    registerUrl: "/register/webify",
+    upiid: "blacksquaree9600-1@okaxis",
+    maxTeamMembers: 3,
+    category: "intra",
+
+    // webify says 300/team, so:
+    feeType: "per_head",
+    feeAmount: 200,
+
+    descriptionLines: [
+      "Website Development Challenge - Creative and technical students build innovative web solutions under real-time constraints.",
+      "Day 1: Development & Mentoring - Problem statement provided on-the-spot, expert mentoring on development and UI/UX best practices.",
+      "Day 2: Final Development & Face-Off - Enhance websites, present before jury panel, and compete in final evaluation.",
+      "Team Size: Up to 3 members | Fee: ₹300/team (₹100/head) | Prize Pool: ₹10,000",
+    ],
+    guidelinesFile: "WEBIFY.pdf",
+    contactLeft: "+919788277739",
+    contactRight: "+918667488669",
+    contactLeftName: "DHARSHAN P ",
+    contactRightName: "KISHOR S",
+    whatsappLink: "https://chat.whatsapp.com/KhzXrUV8RON0w7Zrd6oEso",
+  },
+  {
+    slug: "buildscape",
+    title: "Buildscape",
+    date: "Feb 21",
+    image: buildscapeImg,
+    registerUrl: "/register/buildscape",
+    upiid: "veerarajprathap70@okhdfcbank",
+    maxTeamMembers: 3,
+    category: "intra",
+
+    feeType: "per_head",
+    feeAmount: 200,
+
+    descriptionLines: [
+      "Design and build creative mechanical structures.",
+      "Challenges emphasize innovation and robustness.",
+      "Bring tools and small materials if needed.",
+    ],
+    guidelinesFile: "Buildscape.pdf",
+    contactLeft: "+918903939250",
+    contactRight: "+919361648487",
+    contactLeftName: "RUKMANI PRIYA K N",
+    contactRightName: "PRATHAP V",
+    whatsappLink: "https://chat.whatsapp.com/FhpI5f6nZoeEXCUjTah7yu",
+  },
+];
+
+// ✅ INTER COLLEGE EVENTS
+export const interEventList: EventItem[] = [
+  {
+    slug: "ipl-auction",
+    title: "IPL Auction",
+    date: "Feb 25",
+    image: iplImg,
+    registerUrl: "/register/ipl-auction",
+    upiid: "danajaii.ga-1@okicici",
+    maxTeamMembers: 5,
+    category: "inter",
+
+    feeType: "per_head",
+    feeAmount: 100,
+
+    descriptionLines: [
+      "Fun and engaging mock auction event testing cricket knowledge, strategy, and team-building skills.",
+      "Experience the thrill of an IPL-style auction while competing with peers.",
+      "Demonstrate your strategic bidding prowess and cricket expertise in a casual, entertaining environment.",
+      "Build your dream squad and prove your team management acumen against competitors.",
+    ],
+    guidelinesFile: "IPL AUCTION.pdf",
+    contactLeft: "+919943633033",
+    contactRight: "+919363225854",
+    contactLeftName: "DANAJAII G A",
+    contactRightName: "ANUSH S",
+    whatsappLink: "https://chat.whatsapp.com/LbMhCLQeWaR7x7HNQ3376I",
+  },
+  {
+    slug: "stocks-shares",
+    title: "Stocks and Shares",
+    date: "Feb 24",
+    image: stocksSharesImg,
+    registerUrl: "/register/stocks-shares",
+    upiid: "yuga.bharathijai2106@oksbi",
+    maxTeamMembers: 1,
+    category: "inter",
+
+    feeType: "per_head",
+    feeAmount: 100,
+
+    descriptionLines: [
+      "Interactive finance challenge testing investment acumen and market knowledge.",
+      "Participants compete in portfolio management and strategic trading decisions.",
+      "Learn real-world finance concepts while competing against peers.",
+      "Experience the thrill of investment strategy and market dynamics.",
+    ],
+    guidelinesFile: "STOCKS.pdf",
+    contactLeft: "+918838144028",
+    contactLeftName: "J Yuga Bharathi",
+    whatsappLink: "https://chat.whatsapp.com/KLJmkLhteJw9DLKpEIVjnG",
+  },
+  {
+    slug: "masterchef-mania",
+    title: "Master Chef Mania",
+    date: "Feb 21",
+    image: masterchefImg,
+    registerUrl: "/register/masterchef-mania",
+    upiid: "asvitaanand12@okicici",
+    maxTeamMembers: 3,
+    category: "inter",
+
+    feeType: "per_head",
+    feeAmount: 100,
+
+    descriptionLines: [
+      "Fun and interactive cooking competition inspired by Cook with Comali format.",
+      "Teams of three showcase culinary skills, creativity, and teamwork with engaging twists.",
+      "Preliminary rounds based on registration, followed by exciting cooking challenges.",
+      "A perfect blend of cooking, coordination, and entertainment for all skill levels.",
+    ],
+    contactLeft: "+917010151605",
+    contactRight: "+918438739352",
+    contactLeftName: "ASVITA A T",
+    contactRightName: "PRITHIGA D",
+    whatsappLink: "https://chat.whatsapp.com/CF8R5WbWOLZHzymE8F9Pdj",
+  },
+  {
+    slug: "b-plan",
+    title: "B-Plan",
+    date: "Feb 24",
+    image: bplanImg,
+    registerUrl: "/register/b-plan",
+    upiid: "ya377899@oksbi",
+    maxTeamMembers: 1,
+    category: "inter",
+
+    feeType: "per_head",
+    feeAmount: 100,
+
+    descriptionLines: [
+      "Comprehensive business plan competition for aspiring entrepreneurs.",
+      "Present innovative business ideas with detailed financial projections.",
+      "Compete against other teams and get evaluated by industry experts.",
+      "Win prizes and recognition for your entrepreneurial vision.",
+    ],
+    guidelinesFile: "B-PLAN.pdf",
+    contactLeft: "+917010499316",
+    contactLeftName: "A Mohammed Yunus",
+    whatsappLink: "https://chat.whatsapp.com/Ll7cghWP51g92XoddlutVU",
+  },
+  {
+    slug: "detx-forum",
+    title: "DETx Forum",
+    date: "Feb 24",
+    image: detxImg,
+    registerUrl: "/register/detx-forum",
+    upiid: "kavin.shanmalli-1@okaxis",
+    maxTeamMembers: 1,
+    category: "inter",
+
+    feeType: "per_head",
+    feeAmount: 100,
+
+    descriptionLines: [
+      "Comprehensive business plan competition for aspiring entrepreneurs.",
+      "Present innovative business ideas with detailed financial projections.",
+      "Compete against other teams and get evaluated by industry experts.",
+      "Win prizes and recognition for your entrepreneurial vision.",
+    ],
+    guidelinesFile: "DETX.pdf",
+    contactLeft: "+918807110599",
+    contactRight: "+916382687536",
+    contactLeftName: "Kavin S M A",
+    contactRightName: "Akaash K P",
+    whatsappLink: "https://chat.whatsapp.com/EpNYmzr7ay87NSrgIvPflK",
+  },
+];
+
+// ✅ WORKSHOPS
+export const workshopList: EventItem[] = [
+  {
+    slug: "product-market-fit",
+    title: "Product-Market Fit",
+    date: "Feb 23",
+    image: productMarketFitImg,
+    registerUrl: "/register/product-market-fit",
+    upiid: "nisaanthpadhu-1@oksbi",
+    maxTeamMembers: 1,
+    category: "workshop",
+
+    feeType: "per_head",
+    feeAmount: 100,
+
+    descriptionLines: [
+      "Understand how to build products that truly solve real customer problems.",
+      "Learn to identify your target users and validate their needs effectively.",
+      "Explore techniques for testing ideas and gathering meaningful feedback.",
+      "Discover metrics to measure traction and customer satisfaction.",
+      "Perfect for founders aiming to create products people actually want.",
+    ],
+    contactLeft: "+919361834539",
+    contactLeftName: "P Nisaanth",
+    whatsappLink: "https://chat.whatsapp.com/DLL78akVgbH9BH9PR60CZ5",
+  },
+  {
+    slug: "business-market-fit",
+    title: "Business Market Fit",
+    date: "Feb 23",
+    image: businessMarketFitImg,
+    registerUrl: "/register/business-market-fit",
+    upiid: "nisaanthpadhu-1@oksbi",
+    maxTeamMembers: 1,
+    category: "workshop",
+
+    feeType: "per_head",
+    feeAmount: 100,
+
+    descriptionLines: [
+      "Learn how to align your business model with market demand.",
+      "Understand pricing, revenue streams, and scalable growth strategies.",
+      "Analyze customer segments and competitive positioning.",
+      "Gain insights into sustaining long-term profitability.",
+      "Ideal for startups ready to move from idea to sustainable business.",
+    ],
+    contactLeft: "+918248202476",
+    contactLeftName: "S Sneha",
+    whatsappLink: "https://chat.whatsapp.com/DHqiKlTmDxgIJ9H9ctm5ui",
+  },
+  {
+    slug: "rising-capital-finance",
+    title: "Rising Capital and Finance Management",
+    date: "Feb 23",
+    image: financeImg,
+    registerUrl: "/register/rising-capital-finance",
+    upiid: "nisaanthpadhu-1@oksbi",
+    maxTeamMembers: 1,
+    category: "workshop",
+
+    feeType: "per_head",
+    feeAmount: 100,
+
+    descriptionLines: [
+      "Raising capital and financial management focus on helping startups understand how to secure funds and manage finances effectively. It covers different capital-raising strategies and funding options such as bootstrapping, angel investors, venture capital, grants, and loans. The session also includes guidance on preparing pitch decks, planning budgets, managing cash flow, forecasting finances, and maintaining strong investor relationships to support sustainable business growth.",
+    ],
+    contactLeft: "+917603930153",
+    
+    contactLeftName: "S P Kishore Narandheran",
+    
+    whatsappLink: "https://chat.whatsapp.com/GlQpjbsw8msCRauXo9N4bh",
+  },
+  {
+    slug: "ipr-ip-management",
+    title: "IPR & IP Management",
+    date: "Feb 23",
+    image: iprImg,
+    registerUrl: "/register/ipr-ip-management",
+    upiid: "nisaanthpadhu-1@oksbi",
+    maxTeamMembers: 1,
+    category: "workshop",
+
+    feeType: "per_head",
+    feeAmount: 100,
+
+    descriptionLines: [
+      "Learn the fundamentals of Intellectual Property Rights.",
+      "Understand patents, trademarks, copyrights, and trade secrets.",
+      "Discover how to protect your ideas and innovations legally.",
+      "Explore strategies for managing and monetizing IP assets.",
+      "A must-attend session for innovation-driven startups.",
+    ],
+    contactLeft: "+916379612187",
+    
+    contactLeftName: "A V Deepthi",
+    
+    whatsappLink: "https://chat.whatsapp.com/KMa14QI8Cx06BxZlN0Ogz5",
+  },
+  {
+    slug: "startup-legal-ethical",
+    title: "Startup Legal & Ethical Steps",
+    date: "Feb 23",
+    image: startupLegalEthicalImg,
+    registerUrl: "/register/startup-legal-ethical",
+    upiid: "nisaanthpadhu-1@oksbi",
+    maxTeamMembers: 1,
+    category: "workshop",
+
+    feeType: "per_head",
+    feeAmount: 100,
+
+    descriptionLines: [
+      "Understand the legal requirements for starting and running a business.",
+      "Learn about company registration, compliance, and contracts.",
+      "Explore ethical practices for responsible entrepreneurship.",
+      "Avoid legal pitfalls that can affect startup growth.",
+      "Designed to help founders build legally sound and ethical startups.",
+    ],
+    contactLeft: "+919384923241",
+    
+    contactLeftName: "M J Shubaharine",
+    
+    whatsappLink: "https://chat.whatsapp.com/Hmgr3SAOYYP8FaDCd8x8HJ",
+  },
+];
+
+// ✅ PERFORMING ARTS / FILMS
+export const performingArtsList: EventItem[] = [
+  {
+    slug: "thirai-trivia",
+    title: "திரை-Trivia",
+    date: null,
+    image: thiraiImg,
+    registerUrl: "/register/thirai-trivia",
+    upiid: "pranu301205@oksbi",
+    maxTeamMembers: 5,
+    category: "arts",
+
+    feeType: "per_team",
+    feeAmount: 200,
+
+    descriptionLines: [
+      "Innovative Short Film / Tribute Videos (Intra College Only) - Enthusiastic participation from both makers and audiences.",
+      "Test your film knowledge across multiple rounds and challenge others with your cinema expertise.",
+      "Open to solo participants and small teams from KEC - showcase your passion for films.",
+    ],
+    guidelinesFile: "THIRAI TRIVIA.pdf",
+    contactLeft: "+918072323353",
+    contactRight: "+918300848482",
+    contactLeftName: "ARAVINDAN T ",
+    contactRightName: "LINZA R S",
+    whatsappLink: "https://chat.whatsapp.com/CrAE0u8IZ3FEiDcvLUBbAg",
+  },
+  {
+    slug: "udayami-bazaar",
+    title: "Udayami Bazaar",
+    date: null,
+    image: udayamiImg,
+    registerUrl: "https://forms.google.com/",
+    upiid: "",
+    maxTeamMembers: 1,
+    category: "arts",
+    isClosed: true,
+    feeType: "per_head",
+    feeAmount: 0,
+    descriptionLines: [
+      "Udayami Bazaar - An exciting marketplace event.",
+      "Explore unique offerings and connect with innovators.",
+      "Join us for a memorable experience.",
+    ],
+    guidelinesFile: "",
+    contactLeft: "",
+    contactRight: "",
+    contactLeftName: "",
+    contactRightName: "",
+    whatsappLink: "",
+  },
+];
+
+ 
+export const events: EventItem[] = [
+  ...intraeventList,
+  ...interEventList,
+  ...workshopList,
+  ...performingArtsList,
+];
+
+export default events;
