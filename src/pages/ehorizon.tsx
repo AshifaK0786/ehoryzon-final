@@ -1035,30 +1035,27 @@ export default function EHorizon() {
 
                               <div className="p-5">
                                 <div className="flex items-center justify-between gap-3">
-                                  <div>
-                                    <h4 className="text-lg font-extrabold text-white">{e.title}</h4>
+                                  <div className="flex-1">
+                                    <h4 className="text-xl font-extrabold text-white">{e.title}</h4>
                                     {e.date && (
                                       <p className="text-sm text-yellow-400/80 mt-1">{e.date}</p>
                                     )}
                                   </div>
-
-                                  {e.isClosed ? (
-                                    <div className="text-yellow-400 font-bold text-sm uppercase tracking-wider">
-                                      stall auction date announce soon
-                                    </div>
-                                  ) : (
-                                    <button
-                                      onClick={() => goToRegister(e.registerUrl)}
-                                      className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-400 text-black font-bold hover:shadow-[0_0_22px_rgba(251,191,36,0.22)] transition"
-                                    >
-                                      Register <ArrowRight size={16} />
-                                    </button>
-                                  )}
                                 </div>
                               </div>
                             </div>
                           );
                         })}
+                    </div>
+
+                    {/* Button to view workshop details */}
+                    <div className="text-center mt-12">
+                      <button
+                        onClick={() => navigate("/workshop")}
+                        className="px-12 py-5 bg-gradient-to-r from-yellow-400 to-yellow-600 text-black rounded-full font-bold text-xl hover:shadow-[0_0_40px_rgba(251,191,36,0.4)] transition-all hover:scale-105"
+                      >
+                        Click Here to View Exclusive Workshops
+                      </button>
                     </div>
                   </>
                 );

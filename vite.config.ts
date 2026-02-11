@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
   ],
+  assetsInclude: ["**/*.pptx"],
   server: {
     host: true,        // REQUIRED for tunnel + IP access
     port: 5173,

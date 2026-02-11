@@ -5,6 +5,7 @@ import EHorizon from "./pages/ehorizon";
 import AboutUs from "./pages/aboutus";
 import Schedule from "./pages/schedule";
 import Rules from "./pages/rules";
+import Workshop from "./pages/workshop";
 import PitchRegister from "./pages/pitch";
 import RegistrationPage from "./pages/registration";
 import EventRegister from "./pages/eventRegister";
@@ -64,6 +65,7 @@ export default function App() {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/rules" element={<Rules />} />
+        <Route path="/workshop" element={<Workshop />} />
         <Route path="/register/pitch" element={<PitchRegister />} />
             <Route path="/registration" element={<RegistrationPage />} />
             <Route path="/register/thirai-trivia" element={<ThiraiTriviaRegister />} />

@@ -21,8 +21,10 @@ export function EventRegisterForm({ event }: { event?: any }) {
   const maxTeam = event?.maxTeamMembers ?? 1;
   const isTeamEvent = maxTeam > 1;
 
-  const [collegeType, setCollegeType] = useState<CollegeType>("");
+  const [collegeType, setCollegeType] = useState<CollegeType>(event?.slug === "thirai-trivia" ? "intra" : "");
   const [teamName, setTeamName] = useState("");
+  const [registrationType, setRegistrationType] = useState<"paid" | "free" | "">("");
+  const [profitSharingAgreed, setProfitSharingAgreed] = useState(false);
 
   const [person, setPerson] = useState<Person>({
     name: "",
@@ -113,6 +115,15 @@ export function EventRegisterForm({ event }: { event?: any }) {
   // ✅ validation supports BOTH single-participant and team events
   const validate = () => {
   if (!collegeType) return "Please select Intra-college or Inter-college first";
+  
+  // ✅ Thirai Trivia registration type validation
+  if (event?.slug === "thirai-trivia") {
+    if (!registrationType) return "Please select a registration type (Paid or Free)";
+    if (registrationType === "free" && !profitSharingAgreed) {
+      return "You must agree to the 50% profit-sharing condition for Free Registration";
+    }
+  }
+  
   if (isTeamEvent && !teamName.trim()) return "Team name is required";
 
   if (!person.name.trim()) return "Name is required";
@@ -144,8 +155,9 @@ export function EventRegisterForm({ event }: { event?: any }) {
     }
   }
 
-  // ✅ NEW: payment screenshot required
-  if (!screenshots || screenshots.length === 0) {
+  // ✅ NEW: payment screenshot required (except for free registration in Thirai Trivia)
+  const isThiraiTriviaFree = event?.slug === "thirai-trivia" && registrationType === "free";
+  if (!isThiraiTriviaFree && (!screenshots || screenshots.length === 0)) {
     return "Payment screenshot is required";
   }
 
@@ -176,7 +188,14 @@ export function EventRegisterForm({ event }: { event?: any }) {
   const teamSize = 1 + team.length;
   const feeType: "per_head" | "per_team" = event?.feeType ?? "per_head";
   const feeAmount = Number(event?.feeAmount ?? 100);
-  const amount = feeType === "per_team" ? feeAmount : feeAmount * teamSize;
+  
+  // ✅ For Thirai Trivia, adjust amount based on registration type
+  let amount = feeType === "per_team" ? feeAmount : feeAmount * teamSize;
+  if (event?.slug === "thirai-trivia" && registrationType === "paid") {
+    amount = 1000; // Fixed fee for paid registration
+  } else if (event?.slug === "thirai-trivia" && registrationType === "free") {
+    amount = 0; // No payment for free registration
+  }
 
   const upiId = (event?.upiid || "").trim();
   const payeeName = event?.title || "Event Fee";
@@ -234,6 +253,12 @@ export function EventRegisterForm({ event }: { event?: any }) {
       // ✅ college
       fd.append("college_name", (person.collegeName || "").trim());
       fd.append("college_type", collegeType);
+      
+      // ✅ Thirai Trivia specific fields
+      if (event?.slug === "thirai-trivia") {
+        fd.append("registration_type", registrationType);
+        fd.append("profit_sharing_agreed", String(profitSharingAgreed));
+      }
 
       // ✅ payment file (first file only)
       if (screenshots[0]) fd.append("payment_screenshots", screenshots[0]);
@@ -309,6 +334,16 @@ export function EventRegisterForm({ event }: { event?: any }) {
               <div className="text-sm font-medium text-white">{event?.contactLeft ?? "+91 99999 99999"}</div>
             </a>
 
+            {event?.contactcenter && (
+              <a
+                href={`tel:${event.contactcenter}`}
+                className="flex-1 min-w-[200px] max-w-[47%] inline-flex flex-col items-center justify-center gap-1 rounded-full px-5 py-2 bg-white/10 backdrop-blur-md text-white/85 hover:bg-yellow-400 hover:text-black transition"
+              >
+                <div className="text-sm font-medium text-white">{event?.contactcenterName ?? ""}</div>
+                <div className="text-sm font-medium text-white">{event?.contactcenter}</div>
+              </a>
+            )}
+
             {event?.contactRight && (
               <a
                 href={`tel:${event.contactRight}`}
@@ -343,7 +378,8 @@ export function EventRegisterForm({ event }: { event?: any }) {
               </div>
             )}
 
-            {/* College type */}
+            {/* College type - Hidden for Thirai Trivia */}
+            {event?.slug !== "thirai-trivia" && (
             <div>
               <label className="text-sm text-white/70 font-semibold">Participation Type * (Select First)</label>
               <div className="mt-3 flex gap-4">
@@ -358,22 +394,84 @@ export function EventRegisterForm({ event }: { event?: any }) {
                 >
                   Intra-College (KEC)
                 </button>
-                {event?.slug !== "thirai-trivia" && (
-                  <button
-                    type="button"
-                    onClick={() => setCollegeType("inter")}
-                    className={`flex-1 py-3 px-4 rounded-2xl font-semibold transition ${
-                      collegeType === "inter"
-                        ? "bg-yellow-400 text-black border border-yellow-400"
-                        : "bg-black/40 border border-yellow-600/20 text-white hover:border-yellow-500/60"
-                    }`}
-                  >
-                    Inter-College
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => setCollegeType("inter")}
+                  className={`flex-1 py-3 px-4 rounded-2xl font-semibold transition ${
+                    collegeType === "inter"
+                      ? "bg-yellow-400 text-black border border-yellow-400"
+                      : "bg-black/40 border border-yellow-600/20 text-white hover:border-yellow-500/60"
+                  }`}
+                >
+                  Inter-College
+                </button>
               </div>
               {!collegeType && <p className="mt-2 text-xs text-yellow-300">Please select your participation type to continue</p>}
             </div>
+            )}
+
+            {/* ✅ Thirai Trivia Registration Type Selection */}
+            {event?.slug === "thirai-trivia" && collegeType && (
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm text-white/70 font-semibold">Registration Type *</label>
+                  <div className="mt-3 flex gap-4">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setRegistrationType("paid");
+                        setProfitSharingAgreed(false);
+                      }}
+                      className={`flex-1 py-3 px-4 rounded-2xl font-semibold transition ${
+                        registrationType === "paid"
+                          ? "bg-yellow-400 text-black border border-yellow-400"
+                          : "bg-black/40 border border-yellow-600/20 text-white hover:border-yellow-500/60"
+                      }`}
+                    >
+                      Paid Registration (₹1000)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setRegistrationType("free")}
+                      className={`flex-1 py-3 px-4 rounded-2xl font-semibold transition ${
+                        registrationType === "free"
+                          ? "bg-yellow-400 text-black border border-yellow-400"
+                          : "bg-black/40 border border-yellow-600/20 text-white hover:border-yellow-500/60"
+                      }`}
+                    >
+                      Free Registration (Profit-Sharing)
+                    </button>
+                  </div>
+                </div>
+
+                {/* Registration Instructions */}
+                <div className="rounded-2xl border border-yellow-600/25 bg-yellow-400/5 p-4">
+                  <div className="text-sm text-white/90 space-y-2">
+                    <p>• Participants must choose one registration option: <strong>Paid Registration (₹1000)</strong> or <strong>Free Registration (Profit-Sharing Model)</strong>.</p>
+                    <p>• <strong>Paid Registration</strong> requires a ₹1000 fee and no profit sharing is applicable.</p>
+                    <p>• <strong>Free Registration</strong> does not require any payment, but teams must share 50% of their profit with the organizing committee.</p>
+                    <p>• Selecting Free Registration implies mandatory agreement to the 50% profit-sharing condition.</p>
+                  </div>
+                </div>
+
+                {/* Profit Sharing Agreement Checkbox for Free Registration */}
+                {registrationType === "free" && (
+                  <div className="rounded-2xl border border-yellow-600/25 bg-red-500/10 p-4">
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={profitSharingAgreed}
+                        onChange={(e) => setProfitSharingAgreed(e.target.checked)}
+                        className="mt-1 w-5 h-5 rounded border-yellow-600/40 bg-black/40 text-yellow-400 focus:ring-yellow-500"
+                      />
+                      <span className="text-sm text-white/90">
+                        ☑️ I agree to share <strong>50% of the total profit</strong> earned by my team from Thirai Trivia with the organizing committee. I understand that failure to comply may lead to disqualification from future events.
+                      </span>
+                    </label>
+                  </div>
+                )}
+              </div>
+            )}
 
             {!collegeType ? (
               <div className="text-center py-8">
@@ -634,12 +732,17 @@ export function EventRegisterForm({ event }: { event?: any }) {
                   </div>
                 )}
 
-                {/* ✅ PAYMENT QR (GENERATED) */}
+                {/* ✅ PAYMENT QR (GENERATED) - Hide for Thirai Trivia Free Registration */}
+                {!(event?.slug === "thirai-trivia" && registrationType === "free") && (
                 <div>
                   <label className="block text-sm text-white/80 mb-1">Payment QR</label>
                   <p className="text-white/70 mb-2">
-                    Scan to pay <span className="text-yellow-300 font-bold">₹{amount}</span>{" "}
-                    {feeType === "per_head" ? `(₹${feeAmount} × ${teamSize} members)` : "(per team)"}.
+                    {event?.slug === "thirai-trivia" && registrationType === "paid" ? (
+                      <span>Scan to pay <span className="text-yellow-300 font-bold">₹1000</span> (Fixed Paid Registration Fee).</span>
+                    ) : (
+                      <span>Scan to pay <span className="text-yellow-300 font-bold">₹{amount}</span>{" "}
+                      {feeType === "per_head" ? `(₹${feeAmount} × ${teamSize} members)` : "(per team)"}.</span>
+                    )}
                   </p>
 
                   {!upiId ? (
@@ -698,6 +801,7 @@ export function EventRegisterForm({ event }: { event?: any }) {
                     </div>
                   </div>
                 </div>
+                )}
 
                 <div className="pt-4">
                   <button
@@ -768,5 +872,28 @@ export function EventRegisterForm({ event }: { event?: any }) {
 export default function EventRegister() {
   const { slug } = useParams();
   const event = events.find((e) => e.slug === slug);
+
+  // If no event is found, check for query params (amount, upi, title)
+  if (!event && typeof window !== "undefined") {
+    const params = new URLSearchParams(window.location.search);
+    const amountParam = params.get("amount");
+    const upiParam = params.get("upi");
+    const titleParam = params.get("title");
+
+    if (amountParam || upiParam) {
+      const feeAmount = Number(amountParam || 0);
+      const syntheticEvent: any = {
+        slug: "custom-workshops",
+        title: titleParam || "Workshop Registration",
+        feeAmount,
+        feeType: "per_head",
+        upiid: upiParam || "sahithsa020@okaxis",
+        descriptionLines: [`Workshops selected. Pay ₹${feeAmount} using UPI.`],
+      };
+
+      return <EventRegisterForm event={syntheticEvent} />;
+    }
+  }
+
   return <EventRegisterForm event={event} />;
 }

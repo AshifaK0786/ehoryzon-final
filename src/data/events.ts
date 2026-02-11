@@ -39,6 +39,8 @@ export type EventItem = {
 
   contactLeft?: string;
   contactRight?: string;
+  contactcenter?:string;
+  contactcenterName?:string;
   contactLeftName?: string;
   contactRightName?: string;
   whatsappLink?: string;
@@ -54,12 +56,12 @@ export const intraeventList: EventItem[] = [
     image: mecharenaImg,
     registerUrl: "/register/mecharena",
     upiid: "rithesh07.06@okhdfcbank",
-    maxTeamMembers: 5,
+    maxTeamMembers: 2,
     category: "intra",
 
     // ✅ payment rule (edit if needed)
     feeType: "per_head",
-    feeAmount: 200,
+    feeAmount: 100,
 
     descriptionLines: [
       "Design Conclave - Competitive, hands-on CAD modeling event testing speed, creativity, technical accuracy, and practical design thinking.",
@@ -85,13 +87,10 @@ export const intraeventList: EventItem[] = [
     category: "intra",
 
     feeType: "per_head",
-    feeAmount: 200,
+    feeAmount: 100,
 
     descriptionLines: [
-      "Two-day technical innovation challenge solving real-world electrical engineering problems.",
-      "Compete through MCQ assessments, circuit design, simulation, and final hardware-based hackathon rounds.",
-      "Encourages innovation, technical excellence, and practical problem-solving under expert evaluation.",
-      "Push your limits and showcase electrical engineering mastery across multiple competitive formats.",
+      "A technical innovation challenge focused on solving real-world electrical engineering problems.Participants compete through circuit design, simulation, and final hardware-based hackathon rounds.The event promotes innovation, technical excellence, and hands-on problem-solving under expert evaluation.",
     ],
     guidelinesFile: "Electrical_Odyssey.pdf",
     contactLeft: "+919715708810",
@@ -140,10 +139,12 @@ export const intraeventList: EventItem[] = [
     feeAmount: 200,
 
     descriptionLines: [
-      "Website Development Challenge - Creative and technical students build innovative web solutions under real-time constraints.",
-      "Day 1: Development & Mentoring - Problem statement provided on-the-spot, expert mentoring on development and UI/UX best practices.",
-      "Day 2: Final Development & Face-Off - Enhance websites, present before jury panel, and compete in final evaluation.",
-      "Team Size: Up to 3 members | Fee: ₹300/team (₹100/head) | Prize Pool: ₹10,000",
+     "Website Development Challenge",
+
+    "A competitive event where creative and technical students build innovative web solutions under real-time constraints.",
+
+    "Team Size: Maximum 3 members | Registration Fee: ₹200 per head | (₹600 per team – max 3 members) | Prize Pool: ₹10,000",
+     
     ],
     guidelinesFile: "WEBIFY.pdf",
     contactLeft: "+919788277739",
@@ -163,14 +164,14 @@ export const intraeventList: EventItem[] = [
     category: "intra",
 
     feeType: "per_head",
-    feeAmount: 200,
+    feeAmount: 100,
 
     descriptionLines: [
-      "Design and build creative mechanical structures.",
-      "Challenges emphasize innovation and robustness.",
+      "Design and build creative civil structures.",
+      "Innovative and energy efficient building design.",
       "Bring tools and small materials if needed.",
     ],
-    guidelinesFile: "Buildscape.pdf",
+    guidelinesFile: "buildscape.pdf",
     contactLeft: "+918903939250",
     contactRight: "+919361648487",
     contactLeftName: "RUKMANI PRIYA K N",
@@ -213,7 +214,7 @@ export const interEventList: EventItem[] = [
     date: "Feb 24",
     image: stocksSharesImg,
     registerUrl: "/register/stocks-shares",
-    upiid: "yuga.bharathijai2106@oksbi",
+    upiid: "pranu301205@oksbi",
     maxTeamMembers: 1,
     category: "inter",
 
@@ -237,7 +238,7 @@ export const interEventList: EventItem[] = [
     date: "Feb 21",
     image: masterchefImg,
     registerUrl: "/register/masterchef-mania",
-    upiid: "asvitaanand12@okicici",
+    upiid: "mailtoprithiga@okhdfcbank",
     maxTeamMembers: 3,
     category: "inter",
 
@@ -250,6 +251,7 @@ export const interEventList: EventItem[] = [
       "Preliminary rounds based on registration, followed by exciting cooking challenges.",
       "A perfect blend of cooking, coordination, and entertainment for all skill levels.",
     ],
+    guidelinesFile: "masterchef.pdf",
     contactLeft: "+917010151605",
     contactRight: "+918438739352",
     contactLeftName: "ASVITA A T",
@@ -263,7 +265,7 @@ export const interEventList: EventItem[] = [
     image: bplanImg,
     registerUrl: "/register/b-plan",
     upiid: "ya377899@oksbi",
-    maxTeamMembers: 1,
+    maxTeamMembers: 3,
     category: "inter",
 
     feeType: "per_head",
@@ -275,7 +277,7 @@ export const interEventList: EventItem[] = [
       "Compete against other teams and get evaluated by industry experts.",
       "Win prizes and recognition for your entrepreneurial vision.",
     ],
-    guidelinesFile: "B-PLAN.pdf",
+    guidelinesFile: "b-plan.pdf",
     contactLeft: "+917010499316",
     contactLeftName: "A Mohammed Yunus",
     whatsappLink: "https://chat.whatsapp.com/Ll7cghWP51g92XoddlutVU",
@@ -294,12 +296,9 @@ export const interEventList: EventItem[] = [
     feeAmount: 100,
 
     descriptionLines: [
-      "Comprehensive business plan competition for aspiring entrepreneurs.",
-      "Present innovative business ideas with detailed financial projections.",
-      "Compete against other teams and get evaluated by industry experts.",
-      "Win prizes and recognition for your entrepreneurial vision.",
+      "DETx is an ideas forum that provides a platform for original student voices through crowdfunding, focuses on authentic thinking, confident expression, and real perspectives, celebrates clarity of thought, originality, and on-stage impact, and offers participants the opportunity to be honored with the title “VOICE OF KEC.",
     ],
-    guidelinesFile: "DETX.pdf",
+    guidelinesFile: "DETx FORUM.pdf",
     contactLeft: "+918807110599",
     contactRight: "+916382687536",
     contactLeftName: "Kavin S M A",
@@ -452,12 +451,14 @@ export const performingArtsList: EventItem[] = [
     descriptionLines: [
       "Innovative Short Film / Tribute Videos (Intra College Only) - Enthusiastic participation from both makers and audiences.",
       "Test your film knowledge across multiple rounds and challenge others with your cinema expertise.",
-      "Open to solo participants and small teams from KEC - showcase your passion for films.",
+      "Choose between Paid Registration (₹1000) or Free Registration with 50% profit-sharing partnership model.",
     ],
     guidelinesFile: "THIRAI TRIVIA.pdf",
     contactLeft: "+918072323353",
+    contactcenter: "9384259340",
     contactRight: "+918300848482",
     contactLeftName: "ARAVINDAN T ",
+    contactcenterName: "ABDUL RAHMAN N",
     contactRightName: "LINZA R S",
     whatsappLink: "https://chat.whatsapp.com/CrAE0u8IZ3FEiDcvLUBbAg",
   },
@@ -466,17 +467,17 @@ export const performingArtsList: EventItem[] = [
     title: "Udayami Bazaar",
     date: null,
     image: udayamiImg,
-    registerUrl: "https://forms.google.com/",
+    registerUrl: "https://docs.google.com/forms/d/e/1FAIpQLSc4ISB09baj1clSfC2cc5PWffBhBo2aJsEu3-Wi20qjDKffcw/viewform",
     upiid: "",
     maxTeamMembers: 1,
     category: "arts",
-    isClosed: true,
+    isClosed: false,
     feeType: "per_head",
     feeAmount: 0,
     descriptionLines: [
       "Udayami Bazaar - An exciting marketplace event.",
-      "Explore unique offerings and connect with innovators.",
-      "Join us for a memorable experience.",
+      "Stall auction date announce soon.",
+      "Register now to reserve your spot.",
     ],
     guidelinesFile: "",
     contactLeft: "",
