@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+const eventStartDate = new Date("2026-02-19");
 const EventCountdownPortal = () => {
-  const eventStartDate = new Date("2026-02-19");
-  const [currentTime, setCurrentTime] = useState(new Date());
   const [timeRemaining, setTimeRemaining] = useState({
     days: 0,
     hours: 0,
@@ -12,29 +11,27 @@ const EventCountdownPortal = () => {
 
   // Update timer every second
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
+    const calculateTimeRemaining = () => {
+      const now = new Date();
+      const diff = eventStartDate.getTime() - now.getTime();
+
+      if (diff <= 0) {
+        setTimeRemaining({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setTimeRemaining({ days, hours, minutes, seconds });
+    };
+
+    calculateTimeRemaining();
+    const interval = setInterval(calculateTimeRemaining, 1000);
     return () => clearInterval(interval);
   }, []);
-
-  // Calculate time remaining
-  useEffect(() => {
-    const now = new Date(currentTime);
-    const diff = eventStartDate.getTime() - now.getTime();
-
-    if (diff <= 0) {
-      setTimeRemaining({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      return;
-    }
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    setTimeRemaining({ days, hours, minutes, seconds });
-  }, [currentTime]);
 
   return (
     <div className="w-full bg-transparent py-16 md:py-32 px-4 md:px-6 border-t border-yellow-600/20">

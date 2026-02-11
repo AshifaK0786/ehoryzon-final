@@ -23,7 +23,7 @@ export type EventItem = {
   slug: string;
   title: string;
   date: string | null;
-  image: any;
+  image: string;
   registerUrl: string;
 
   upiid: string;

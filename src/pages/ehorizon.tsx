@@ -87,146 +87,6 @@ function generateStrikeBolts() {
 }
 
 /* -----------------------
-   Lightning Overlay (on top of video)
------------------------- */
-function ThunderOverlay({ onStrike }) {
-  const [strike, setStrike] = useState({ id: 0, bolts: [] });
-  const timersRef = useRef([]);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const clearAll = () => {
-      timersRef.current.forEach((t) => clearTimeout(t));
-      timersRef.current = [];
-    };
-
-    const schedule = () => {
-      const delay = Math.floor(rand(2600, 8600));
-      const t = setTimeout(() => {
-        if (cancelled) return;
-
-        setStrike((prev) => ({
-          id: prev.id + 1,
-          bolts: generateStrikeBolts(),
-        }));
-
-        onStrike?.();
-        schedule();
-      }, delay);
-
-      timersRef.current.push(t);
-    };
-
-    schedule();
-    return () => {
-      cancelled = true;
-      clearAll();
-    };
-  }, [onStrike]);
-
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      <div key={`flash-${strike.id}`} className="absolute inset-0 strike-flash" />
-
-      <svg
-        key={`bolt-${strike.id}`}
-        className="absolute inset-0 w-full h-full"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <linearGradient id="goldBolt" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#FFF6CC" />
-            <stop offset="0.35" stopColor="#FCD34D" />
-            <stop offset="0.6" stopColor="#FBBF24" />
-            <stop offset="1" stopColor="#D97706" />
-          </linearGradient>
-        </defs>
-
-        {strike.bolts.map((b, idx) => (
-          <g key={`${strike.id}-${idx}`}>
-            <path
-              d={b.main}
-              className="strike-bolt"
-              style={{ strokeWidth: b.width, animationDelay: `${idx * 70}ms` }}
-              stroke="url(#goldBolt)"
-              vectorEffect="non-scaling-stroke"
-            />
-            {b.branches.map((bd, j) => (
-              <path
-                key={`${strike.id}-${idx}-br-${j}`}
-                d={bd}
-                className="strike-branch"
-                style={{ animationDelay: `${idx * 70 + 90}ms` }}
-                stroke="url(#goldBolt)"
-                vectorEffect="non-scaling-stroke"
-              />
-            ))}
-          </g>
-        ))}
-      </svg>
-    </div>
-  );
-}
-
-/* -----------------------
-   Carousel
------------------------- */
-function PosterCarousel({ images = [] }) {
-  const scrollerRef = useRef(null);
-
-  const scrollByCard = (dir) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * 360, behavior: "smooth" });
-  };
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => scrollByCard(-1)}
-        className="hidden md:flex absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full border border-yellow-600/30 bg-black/40 backdrop-blur-md text-yellow-400 hover:bg-yellow-500/10 transition"
-        aria-label="Scroll left"
-      >
-        <ChevronLeft size={18} />
-      </button>
-
-      <button
-        type="button"
-        onClick={() => scrollByCard(1)}
-        className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full border border-yellow-600/30 bg-black/40 backdrop-blur-md text-yellow-400 hover:bg-yellow-500/10 transition"
-        aria-label="Scroll right"
-      >
-        <ChevronRight size={18} />
-      </button>
-
-      <div
-        ref={scrollerRef}
-        className="no-scrollbar overflow-x-auto scroll-smooth snap-x snap-mandatory"
-      >
-        <div className="flex gap-6 pr-[120px]">
-          {images.map((src, i) => (
-            <div
-              key={i}
-              className="snap-start shrink-0 w-[260px] sm:w-[320px] md:w-[340px] aspect-[3/4] rounded-2xl overflow-hidden border border-yellow-600/20 bg-black relative"
-            >
-              <img
-                src={src}
-                alt={`carousel-${i}`}
-                className="relative z-10 w-full h-full object-cover"
-                onError={(e) => (e.currentTarget.style.display = "none")}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* -----------------------
    Main
 ------------------------ */
 export default function EHorizon() {
@@ -234,13 +94,7 @@ export default function EHorizon() {
   const [navCompact, setNavCompact] = useState(false);
   const navigate = useNavigate();
   const [strikeGlow, setStrikeGlow] = useState(false);
-  const strikeTimerRef = useRef(null);
-
-  const handleStrike = useCallback(() => {
-    setStrikeGlow(true);
-    if (strikeTimerRef.current) clearTimeout(strikeTimerRef.current);
-    strikeTimerRef.current = setTimeout(() => setStrikeGlow(false), 900);
-  }, []);
+  const strikeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     return () => {
@@ -306,8 +160,8 @@ export default function EHorizon() {
 
   // Get unique dates from all events
   const uniqueDates = useMemo(() => {
-    const dates = new Set(events.map((e: any) => e.date).filter(Boolean));
-    return Array.from(dates).sort();
+    const dates = new Set(events.map((e: { date: string | null }) => e.date).filter(Boolean));
+    return Array.from(dates).sort() as string[];
   }, []);
 
   useEffect(() => {
@@ -332,7 +186,7 @@ export default function EHorizon() {
 
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
-  }, [events.length]);
+  }, []);
 
   const [heroIntro, setHeroIntro] = useState(true);
 
@@ -346,7 +200,7 @@ export default function EHorizon() {
     const priceElement = document.getElementById("price-amount");
     if (!priceElement) return;
 
-    let start = 100000;
+    const start = 100000;
     const end = 150000;
     const duration = 2000;
     let current = start;
